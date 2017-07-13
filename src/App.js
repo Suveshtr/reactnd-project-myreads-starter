@@ -11,7 +11,7 @@ class BooksApp extends React.Component {
   componentDidMount() {
     BooksAPI.getAll().then((booksReceived) => {
       this.setState({
-        books: <booksReceived></booksReceived>
+        books: booksReceived
       })
     })
   }
