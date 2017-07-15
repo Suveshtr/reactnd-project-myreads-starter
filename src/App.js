@@ -7,7 +7,22 @@ import './App.css'
 class BooksApp extends React.Component {
   state = {
     books: [],
-    showSearchPage: true
+    showSearchPage: false
+  }
+
+  updateShelf = (book, newShelf) => {
+    
+    BooksAPI.update(book, newShelf)
+      .then((data) => {
+        this.setState((prevState) => ({
+          books: prevState.books.map( (bookElement) => {
+            if( bookElement.id === book.id) {
+              bookElement.shelf = newShelf
+            }
+            return bookElement
+          })
+        }))
+      })
   }
 
   componentDidMount() {
@@ -18,6 +33,7 @@ class BooksApp extends React.Component {
     })
   }
   render() {
+    
     return (
       <div className="app">
         {this.state.showSearchPage ? (
@@ -34,7 +50,7 @@ class BooksApp extends React.Component {
           </div>
         ) : (
                    
-          <BookShelves books={this.state.books} />
+          <BookShelves books={this.state.books} onChangeShelf={this.updateShelf} />
         
         )}
       </div>
