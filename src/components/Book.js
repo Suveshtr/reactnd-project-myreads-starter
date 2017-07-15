@@ -5,13 +5,12 @@ class Book extends React.Component {
   
   static PropTypes = {
     book: PropTypes.object.isRequired,
-    shelfTitle: PropTypes.string.isRequired,
     onChangeShelf: PropTypes.func.isRequired
   }
 
   render() {
     
-    const { book, shelfTitle, onChangeShelf } = this.props
+    const { book, onChangeShelf } = this.props
     
     return (
       <div className="book">
