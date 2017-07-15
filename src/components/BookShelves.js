@@ -6,15 +6,14 @@ import BookShelf from './BookShelf'
 class BookShelves extends React.Component {
 
   static propTypes = {
-    books: PropTypes.array.isRequired
-    
+    books: PropTypes.array.isRequired,
+    onChangeShelf: PropTypes.func.isRequired
   }
 
    
-
   render() {
 
-    const { books } = this.props
+    const { books, onChangeShelf } = this.props
     const shelfTitiles = {
       wantToRead: 'Want To Read',
       currentlyReading: 'Currently Reading',
@@ -29,10 +28,7 @@ class BookShelves extends React.Component {
    
     let wantToReadBooks, currentlyReadingBooks, readBooks
     
-    wantToReadBooks = books.filter( (book) => {
-      console.log(book.shelf)
-      return book.shelf === shelfTypes.wantToRead} )
-    
+    wantToReadBooks = books.filter( (book) =>  book.shelf === shelfTypes.wantToRead )
     currentlyReadingBooks = books.filter( (book) => book.shelf === shelfTypes.currentlyReading )
     readBooks = books.filter( (book) => book.shelf === shelfTypes.read )
 
@@ -42,9 +38,21 @@ class BookShelves extends React.Component {
           <h1>MyReads</h1>
         </div>
 
-        <BookShelf books={wantToReadBooks} shelfTitle={shelfTitiles.wantToRead} />
-        <BookShelf books={currentlyReadingBooks} shelfTitle={shelfTitiles.currentlyReading} />
-        <BookShelf books={readBooks} shelfTitle={shelfTitiles.read} />
+        <BookShelf 
+          books={wantToReadBooks} 
+          shelfTitle={shelfTitiles.wantToRead} 
+          onChangeShelf={onChangeShelf}
+        />
+        <BookShelf 
+          books={currentlyReadingBooks} 
+          shelfTitle={shelfTitiles.currentlyReading} 
+          onChangeShelf={onChangeShelf}  
+        />
+        <BookShelf 
+          books={readBooks} 
+          shelfTitle={shelfTitiles.read} 
+          onChangeShelf={onChangeShelf}
+        />
 
       </div>
 
