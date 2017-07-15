@@ -1,6 +1,8 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import Book from './Book'
+
 class BookShelf extends React.Component {
   
   static propTypes = {
@@ -21,7 +23,7 @@ class BookShelf extends React.Component {
               <ol className="books-grid">
                 {books.map((book) =>
                   <li key={book.id}>
-                    <Book book={book} shelfTitle={shelfTitle} onChangeShelf={onChangeShelf} />
+                    <Book book={book} onChangeShelf={onChangeShelf} />
                   </li>
                 )}
               </ol>
@@ -29,8 +31,8 @@ class BookShelf extends React.Component {
           </div>
         </div>
         <div className="open-search">
-          <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
-        </div>
+          <Link to="/search" >Add a Book</Link>
+       </div>
       </div>
 
     )
