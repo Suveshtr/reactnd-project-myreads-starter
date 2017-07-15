@@ -2,12 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 class BookShelf extends React.Component {
+  
   static propTypes = {
     books: PropTypes.array.isRequired,
-    shelfTitle: PropTypes.string.isRequired
+    shelfTitle: PropTypes.string.isRequired,
+    onChangeShelf: PropTypes.func.isRequired
   }
+
   render() {
-    const { books, shelfTitle } = this.props
+    const { books, shelfTitle, onChangeShelf } = this.props
 
     return (
       <div className="list-books-content">
@@ -25,14 +28,16 @@ class BookShelf extends React.Component {
                             width: 128,
                             height: 193,
                             backgroundImage: `url(${book.imageLinks.smallThumbnail})`
-                            
                           }}
                         >
                         </div>
                         <div className="book-shelf-changer">
-                          <select>
+                          <select 
+                            onChange={event => onChangeShelf(book, event.target.value)}
+                            defaultValue={book.shelf}
+                          >
                             <option value="none" disabled>Move to...</option>
-                            <option value="currentlyReading">{shelfTitle}</option>
+                            <option value="currentlyReading">Currently Reading</option>
                             <option value="wantToRead">Want to Read</option>
                             <option value="read">Read</option>
                             <option value="none">None</option>
@@ -40,10 +45,10 @@ class BookShelf extends React.Component {
                         </div>
                       </div>
                       <div className="book-title">{book.title}</div>
-                      <div className="book-authors">        
-                          {book.authors.map((author) =>                          
-                              <p key={author}>{author}</p>                          
-                          )}           
+                      <div className="book-authors">
+                        {book.authors.map((author) =>
+                          <p key={author}>{author}</p>
+                        )}
                       </div>
                     </div>
                   </li>
@@ -53,10 +58,10 @@ class BookShelf extends React.Component {
           </div>
         </div>
         <div className="open-search">
-        <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
+          <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
+        </div>
       </div>
-      </div>
-      
+
     )
   }
 }
