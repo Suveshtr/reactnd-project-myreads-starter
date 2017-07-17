@@ -7,21 +7,15 @@ import './App.css'
 
 class BooksApp extends React.Component {
   state = {
-    books: [],
-    showSearchPage: false
+    books: []
   }
 
   updateShelf = (book, newShelf) => {
-    
+    book.shelf = newShelf
     BooksAPI.update(book, newShelf)
-      .then((data) => {
+      .then((updatedBook) => {
         this.setState((prevState) => ({
-          books: prevState.books.map( (bookElement) => {
-            if( bookElement.id === book.id) {
-              bookElement.shelf = newShelf
-            }
-            return bookElement
-          })
+          books: prevState.books.filter( b => b.id !== book.id ).concat(book)
         }))
       })
   }
@@ -39,7 +33,7 @@ class BooksApp extends React.Component {
       <div className="app">
         
           <Route path='/search' render={() => (
-              <SearchBooks />
+              <SearchBooks books={this.state.books} onChangeShelf={this.updateShelf}/>
             )}
           />
           
