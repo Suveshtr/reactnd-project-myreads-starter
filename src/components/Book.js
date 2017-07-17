@@ -12,6 +12,10 @@ class Book extends React.Component {
     
     const { book, onChangeShelf } = this.props
     
+    let imageLink = (typeof book.imageLinks !== 'undefined') 
+          ? book.imageLinks.smallThumbnail 
+          : "http://via.placeholder.com/150"
+
     return (
       <div className="book">
         <div className="book-top">
@@ -19,10 +23,10 @@ class Book extends React.Component {
             style={{
               width: 128,
               height: 193,
-              backgroundImage: `url(${book.imageLinks.smallThumbnail})`
+              backgroundImage: `url(${imageLink})`
             }}
-          >
-          </div>
+          />
+          
           <div className="book-shelf-changer">
             <select
               onChange={event => onChangeShelf(book, event.target.value)}
@@ -37,11 +41,10 @@ class Book extends React.Component {
           </div>
         </div>
         <div className="book-title">{book.title}</div>
-        <div className="book-authors">
-          {book.authors.map((author) =>
-            <p key={author}>{author}</p>
-          )}
-        </div>
+        { typeof book.autors !== 'undefined' && (
+            <div className="book-authors">{book.authors.join(' ,')}</div>
+        )}
+        
       </div>
     )
 
