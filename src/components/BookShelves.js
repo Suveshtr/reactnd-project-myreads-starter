@@ -14,23 +14,12 @@ class BookShelves extends React.Component {
   render() {
 
     const { books, onChangeShelf } = this.props
-    const shelfTitiles = {
+    
+    const shelfTitles = {
       wantToRead: 'Want To Read',
       currentlyReading: 'Currently Reading',
       read: 'Read'
     }
-
-    const shelfTypes = {
-      wantToRead: 'wantToRead',
-      currentlyReading: 'currentlyReading',
-      read: 'read'
-    }
-   
-    let wantToReadBooks, currentlyReadingBooks, readBooks
-    
-    wantToReadBooks = books.filter( (book) =>  book.shelf === shelfTypes.wantToRead )
-    currentlyReadingBooks = books.filter( (book) => book.shelf === shelfTypes.currentlyReading )
-    readBooks = books.filter( (book) => book.shelf === shelfTypes.read )
 
     return (
       <div className="list-books">
@@ -38,22 +27,17 @@ class BookShelves extends React.Component {
           <h1>MyReads</h1>
         </div>
 
-        <BookShelf 
-          books={wantToReadBooks} 
-          shelfTitle={shelfTitiles.wantToRead} 
-          onChangeShelf={onChangeShelf}
-        />
-        <BookShelf 
-          books={currentlyReadingBooks} 
-          shelfTitle={shelfTitiles.currentlyReading} 
-          onChangeShelf={onChangeShelf}  
-        />
-        <BookShelf 
-          books={readBooks} 
-          shelfTitle={shelfTitiles.read} 
-          onChangeShelf={onChangeShelf}
-        />
+        {
+          Object.keys(shelfTitles).map((shelfType) => {
 
+            return <BookShelf 
+              key={shelfType}
+              books={books.filter((book) => book.shelf === shelfType)}
+              shelfTitle={shelfTitles[shelfType]}
+              onChangeShelf={onChangeShelf}
+            />
+          })
+        }
       </div>
 
     )
